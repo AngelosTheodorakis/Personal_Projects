@@ -2,8 +2,8 @@ This is an analysis I've made on my grades in Musicology, at the National and Ka
 
 So these are the files I have uploaded :
 
-**Grades.md** is the analysis I've made. There are some plots and statistics regarding my grades in Musicology and other interesting 
-**Grades_matrix.md** is a matrix with the data I've used (my lessons, grades, etc.) before 'cleaning' it in R.
+**Grades.md** is the analysis I've made. There are some plots and statistics regarding my grades in Musicology and other interesting\
+**Grades_matrix.md** is a matrix with the data I've used (my lessons, grades, etc.) before 'cleaning' it in R.\
 **Grades.Rmd** is the code I used for the presentation in R.
 
 I hope you enjoy and maybe get some ideas, for your personal projects!
