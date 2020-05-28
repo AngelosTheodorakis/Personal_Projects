@@ -1,48 +1,23 @@
-``` r
-setwd("C:/Users/User/Desktop/Άγγελος/Μουσικών σπουδών")
-data<-read.csv("Grades.csv",sep=";",header = TRUE)
-data<-data[,-9] #Remove the last X column
-data<-data[complete.cases(data), ] #Remove rows with NA's
-
-data$Βαθμός<-as.numeric(data$Βαθμός)
-mean(data$Βαθμός) # Grades mean 
-```
+### First we clean the data a bit and have a look at some statistics
 
     ## [1] 7.59375
 
-``` r
-median(data$Βαθμός) # Grades median 
-```
-
     ## [1] 7
-
-``` r
-data$ΕΤΟΣ<-as.factor(data$ΕΤΟΣ)
-summary(data$ΕΤΟΣ)
-```
 
     ## 2016 2017 2018 2019 2020 
     ##    4    7    3   13    5
 
-``` r
-plot(data$ΕΤΟΣ,xlab="Έτος",ylab="Αριθμός μαθήματων",main="Μαθήματα ανα έτος",col=c("green","brown"))
-
-
-
-library(ggplot2)
-```
-
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-1.png)
+### Next, we will plot the number of lessons we have successfully passed, each year:
 
 ``` r
 ggplot(data, aes(x = factor(ΕΤΟΣ),fill=ΕΤΟΣ)) +  
   geom_bar(aes(y = (..count..))) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
-  labs(title='Πλήθος Μαθημάτων ανα έτος', x='',y='Πλήθος')+
+  labs(title='Πλήθος Μαθημάτων ανα έτος', x='',y='Αριθμός μαθήματων')+
   theme(plot.title = element_text(hjust = 0.5),legend.position = "None")
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-2.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
 data$Εξάμηνο<-as.factor(data$Εξάμηνο)
@@ -52,11 +27,7 @@ summary(data$Εξάμηνο)
     ## 1 2 3 4 5 7 8 
     ## 6 7 3 5 4 5 2
 
-``` r
-plot(data$Εξάμηνο,xlab="Εξάμηνο",ylab="Αριθμός μαθήματων",main="Μαθήματα ανα εξάμηνο",col=c("blue","red"))
-```
-
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-3.png)
+### Then, we will find the number of lessons we have successfully passed, according to the semester they belong to.
 
 ``` r
 ggplot(data, aes(x = factor(Εξάμηνο),fill=Εξάμηνο)) +  
@@ -66,27 +37,12 @@ ggplot(data, aes(x = factor(Εξάμηνο),fill=Εξάμηνο)) +
   theme(plot.title = element_text(hjust = 0.5),legend.position = "None")
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-4.png)
-
-``` r
-data$Περίοδος <- droplevels(data$Περίοδος)
-summary(data$Περίοδος)
-```
+![](Grades_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
     ##      ΕΑΡΙΝΟ ΕΙΣΑΓΩΓΙΚΕΣ ΣΕΠΤΕΜΒΡΙΟΥ   ΧΕΙΜΕΡΙΝΟ 
     ##          12           1           3          16
 
-``` r
-levels(data$Περίοδος)
-```
-
-    ## [1] "ΕΑΡΙΝΟ"      "ΕΙΣΑΓΩΓΙΚΕΣ" "ΣΕΠΤΕΜΒΡΙΟΥ" "ΧΕΙΜΕΡΙΝΟ"
-
-``` r
-plot(data$Περίοδος)
-```
-
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-5.png)
+### Below is the number of lessons per exam period:
 
 ``` r
 ggplot(data, aes(x = factor(Περίοδος),fill=Περίοδος)) +  
@@ -96,20 +52,16 @@ ggplot(data, aes(x = factor(Περίοδος),fill=Περίοδος)) +
   theme(plot.title = element_text(hjust = 0.5),legend.position = "None")
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-6.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-``` r
-plot(data$ΕΤΟΣ,data$Βαθμός)
-```
-
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-7.png)
+### We can also make some boxplots and tables regarding the grades for each year, and for each period:
 
 ``` r
 ggplot(data, aes(x=ΕΤΟΣ, y=Βαθμός, fill=ΕΤΟΣ)) +
   geom_boxplot()
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-8.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 ``` r
 table(data$ΕΤΟΣ,data$Βαθμός)
@@ -128,7 +80,7 @@ ggplot(data, aes(x=Περίοδος, y=Βαθμός, fill=Περίοδος)) +
   geom_boxplot()
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-9.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-8-2.png)
 
 ``` r
 table(data$Περίοδος,data$Βαθμός)
@@ -141,13 +93,7 @@ table(data$Περίοδος,data$Βαθμός)
     ##   ΣΕΠΤΕΜΒΡΙΟΥ 0 0 1 0 2  0
     ##   ΧΕΙΜΕΡΙΝΟ   0 3 7 1 3  2
 
-``` r
-table(data$Βαθμός)
-```
-
-    ## 
-    ##  5  6  7  8  9 10 
-    ##  1  5 12  5  6  3
+### Below is the number and percentage of lessons per grade:
 
 ``` r
 ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +  
@@ -157,7 +103,7 @@ ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +
   theme(plot.title = element_text(hjust = 0.5),legend.position = "None")
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-10.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 ``` r
 ggplot(data, aes(x = factor(Βαθμός))) +  
@@ -168,7 +114,9 @@ ggplot(data, aes(x = factor(Βαθμός))) +
   theme(plot.title = element_text(hjust = 0.5),legend.position="none")
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-11.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-9-2.png)
+
+### Next, we have the same plot divided by each year:
 
 ``` r
 ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +  
@@ -179,7 +127,7 @@ ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +
   facet_wrap(~factor(ΕΤΟΣ))
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-12.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 ``` r
 data$Βαρύτητα <- c(rep(1,nrow(data))) #sintelestis varititas
@@ -203,24 +151,10 @@ sum(data$Βαρύτητα * data$Βαθμός)/nrow(data) #vathmos ipologismenos
 
     ## [1] 7.59375
 
-``` r
-data$Κατηγορία[c(32)]<- c("ΣΕΜΙΝΑΡΙΟ")
-data$Κατηγορία[c(30)]<- c("ΕΠΙΛ.ΚΑΤΕΥΘΥΝΣΗΣ")
-data$Κατηγορία[c(1:16,21:24,27)] <- c("ΥΠΟΧΡΕΩΤΙΚΟ")
-data$Κατηγορία[c(17:20,25,26,28,29,31)]<- c("ΥΠ.ΚΑΤΕΥΘΥΝΣΗΣ")
-
-data$Κατηγορία <-as.factor(data$Κατηγορία)
-summary(data$Κατηγορία)
-```
+### Now we will create a new column describing the category of the lessons (obligatory etc.) and then plot the number of lessons per category.
 
     ## ΕΠΙΛ.ΚΑΤΕΥΘΥΝΣΗΣ        ΣΕΜΙΝΑΡΙΟ   ΥΠ.ΚΑΤΕΥΘΥΝΣΗΣ      ΥΠΟΧΡΕΩΤΙΚΟ 
     ##                1                1                9               21
-
-``` r
-plot(data$Κατηγορία,xlab="Κατηγορία",ylab="Αριθμός μαθήματων",main="Μαθήματα ανα κατηγορία",col=c("blue","red"))
-```
-
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-13.png)
 
 ``` r
 ggplot(data, aes(x = factor(Κατηγορία),fill=Κατηγορία)) +  
@@ -230,22 +164,9 @@ ggplot(data, aes(x = factor(Κατηγορία),fill=Κατηγορία)) +
   theme(plot.title = element_text(hjust = 0.5),legend.position = "None" )
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-14.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
-``` r
-library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
+### Now we will create some graphs showing our mean grade for each year.
 
 ``` r
 Grades<-data.frame(data %>%
@@ -265,7 +186,9 @@ text(Grades[,"ΕΤΟΣ"],Grades[,"Μ.Ο."],label=Grades[,"Μ.Ο."],col='blue',ce
 axis(1, at=1:5, labels=levels(data$ΕΤΟΣ), cex.axis=1)
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-15.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-14-1.png)
+
+### Then, we do the same but this time for each category:
 
 ``` r
 GradesΚατηγορία<-data.frame(data %>%
@@ -285,7 +208,9 @@ text(GradesΚατηγορία[,"Κατηγορία"],GradesΚατηγορία[,"
 axis(1, at=1:4, labels=levels(data$Κατηγορία), cex.axis=0.8)
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-16.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-15-1.png)
+
+### Now for each exam period:
 
 ``` r
 GradesΠερίοδος<-data.frame(data %>%
@@ -305,7 +230,9 @@ text(GradesΠερίοδος[,"Περίοδος"],GradesΠερίοδος[,"Μ.Ο.
 axis(1, at=1:4, labels=levels(data$Περίοδος), cex.axis=0.8)
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-17.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-16-1.png)
+
+### Finally, the same for each semester:
 
 ``` r
 GradesΕξάμηνο<-data.frame(data %>%
@@ -325,7 +252,7 @@ text(GradesΕξάμηνο[,"Εξάμηνο"],GradesΕξάμηνο[,"Μ.Ο."],lab
 axis(1, at=1:7, labels=levels(data$Εξάμηνο), cex.axis=0.8)
 ```
 
-![](Grades_files/figure-markdown_github/unnamed-chunk-1-18.png)
+![](Grades_files/figure-markdown_github/unnamed-chunk-17-1.png)
 
 ``` r
 paste("Απομένουν ακόμα",52-nrow(data),"μαθήματα για πτυχίο!")
