@@ -112,9 +112,8 @@ ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +
   facet_wrap(~factor(ΕΤΟΣ))
 ```
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,include=FALSE}
 data$Βαρύτητα <- c(rep(1,nrow(data))) #sintelestis varititas
-str(data)
 sum(data$Βαρύτητα * data$Βαθμός)/nrow(data) #vathmos ipologismenos me sintelesti varititas
 ```
 
@@ -126,7 +125,7 @@ data$Κατηγορία[c(30)]<- c("ΕΠΙΛ.ΚΑΤΕΥΘΥΝΣΗΣ")
 data$Κατηγορία[c(1:16,21:24,27)] <- c("ΥΠΟΧΡΕΩΤΙΚΟ")
 data$Κατηγορία[c(17:20,25,26,28,29,31)]<- c("ΥΠ.ΚΑΤΕΥΘΥΝΣΗΣ")
 data$Κατηγορία <-as.factor(data$Κατηγορία)
-summary(data$Κατηγορία)
+
 ```
 
 ```{r,echo=FALSE}
