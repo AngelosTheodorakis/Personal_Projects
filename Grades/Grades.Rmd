@@ -33,7 +33,7 @@ summary(data$ΕΤΟΣ) # Number of lessons we have passed each year
 
 ### Next, we will plot the number of lessons we have successfully passed, each year:
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x = factor(ΕΤΟΣ),fill=ΕΤΟΣ)) +  
   geom_bar(aes(y = (..count..))) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
@@ -43,14 +43,14 @@ ggplot(data, aes(x = factor(ΕΤΟΣ),fill=ΕΤΟΣ)) +
   
 
 
-```{r}
+```{r,echo=FALSE}
 data$Εξάμηνο<-as.factor(data$Εξάμηνο)
 summary(data$Εξάμηνο)
 ```
 
 ### Then, we will find the number of lessons we have successfully passed, according to the semester they belong to.
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x = factor(Εξάμηνο),fill=Εξάμηνο)) +  
   geom_bar(aes(y = (..count..))) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
@@ -65,7 +65,7 @@ summary(data$Περίοδος)
 
 ### Below is the number of lessons per exam period:
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x = factor(Περίοδος),fill=Περίοδος)) +  
   geom_bar(aes(y = (..count..))) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
@@ -75,7 +75,7 @@ ggplot(data, aes(x = factor(Περίοδος),fill=Περίοδος)) +
 
 ### We can also make some boxplots and tables regarding the grades for each year, and for each period:
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x=ΕΤΟΣ, y=Βαθμός, fill=ΕΤΟΣ)) +
   geom_boxplot()
 table(data$ΕΤΟΣ,data$Βαθμός)
@@ -86,7 +86,7 @@ table(data$Περίοδος,data$Βαθμός)
 
 ### Below is the number and percentage of lessons per grade:
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +  
   geom_bar() +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
@@ -103,7 +103,7 @@ ggplot(data, aes(x = factor(Βαθμός))) +
 
 ### Next, we have the same plot divided by each year:
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +  
   geom_bar() +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
@@ -112,7 +112,7 @@ ggplot(data, aes(x = factor(Βαθμός),fill=factor(Βαθμός))) +
   facet_wrap(~factor(ΕΤΟΣ))
 ```
 
-```{r}
+```{r,echo=FALSE}
 data$Βαρύτητα <- c(rep(1,nrow(data))) #sintelestis varititas
 str(data)
 sum(data$Βαρύτητα * data$Βαθμός)/nrow(data) #vathmos ipologismenos me sintelesti varititas
@@ -129,7 +129,7 @@ data$Κατηγορία <-as.factor(data$Κατηγορία)
 summary(data$Κατηγορία)
 ```
 
-```{r}
+```{r,echo=FALSE}
 ggplot(data, aes(x = factor(Κατηγορία),fill=Κατηγορία)) +  
   geom_bar(aes(y = (..count..))) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3) +
@@ -139,7 +139,7 @@ ggplot(data, aes(x = factor(Κατηγορία),fill=Κατηγορία)) +
 
 ### Now we will create some graphs showing our mean grade for each year.
 
-```{r}
+```{r,echo=FALSE}
 Grades<-data.frame(data %>%
                      group_by(ΕΤΟΣ) %>%
                      summarise(round(mean(Βαθμός),2)))
@@ -153,7 +153,7 @@ axis(1, at=1:5, labels=levels(data$ΕΤΟΣ), cex.axis=1)
 
 ### Then, we do the same but this time for each category:
 
-```{r}
+```{r,echo=FALSE}
 GradesΚατηγορία<-data.frame(data %>%
                      group_by(Κατηγορία) %>%
                      summarise(round(mean(Βαθμός),2)))
@@ -167,7 +167,7 @@ axis(1, at=1:4, labels=levels(data$Κατηγορία), cex.axis=0.8)
 
 ### Now for each exam period:
 
-```{r}
+```{r,echo=FALSE}
 GradesΠερίοδος<-data.frame(data %>%
                               group_by(Περίοδος) %>%
                               summarise(round(mean(Βαθμός),2)))
@@ -181,7 +181,7 @@ axis(1, at=1:4, labels=levels(data$Περίοδος), cex.axis=0.8)
 
 ### Finally, the same for each semester:
 
-```{r}
+```{r,echo=FALSE}
 GradesΕξάμηνο<-data.frame(data %>%
                              group_by(Εξάμηνο) %>%
                              summarise(round(mean(Βαθμός),2)))
@@ -193,7 +193,7 @@ text(GradesΕξάμηνο[,"Εξάμηνο"],GradesΕξάμηνο[,"Μ.Ο."],lab
 axis(1, at=1:7, labels=levels(data$Εξάμηνο), cex.axis=0.8)
 ```
 
-```{r}
+```{r,echo=FALSE}
 paste("Απομένουν ακόμα",52-nrow(data),"μαθήματα για πτυχίο!")
 paste("Ο Γενικός Μέσος Όρος είναι",mean(data$Βαθμός))
 ```
